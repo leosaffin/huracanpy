@@ -3,6 +3,7 @@ Functions to plot the tracks
 """
 
 import matplotlib.pyplot as plt
+import numpy as np
 import seaborn as sns
 import cartopy.crs as ccrs
 
@@ -30,3 +31,29 @@ def plot_tracks_basic(
     )
 
     return fig, ax
+
+
+def add_tag(x, y, tag, **kwargs):
+    """Add a label to a track at each point that it changes
+
+    Parameters
+    ----------
+    x, y : array_like
+    tag : array_like, same length as x and y
+    **kwargs
+
+    Returns
+    -------
+    None
+
+    """
+    # Iteration can be awkward with xarray so just convert non numpy arrays to an array
+    if not isinstance(tag, np.ndarray):
+        tag = np.array(tag)
+
+    prev_tag = ""
+    for n, tag_ in enumerate(tag):
+        tag_ = str(tag_)
+        if tag_ != prev_tag:
+            plt.text(x[n], y[n], tag_, **kwargs)
+            prev_tag = tag_
