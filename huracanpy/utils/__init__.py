@@ -1,12 +1,21 @@
 """Huracanpy module for useful auxilliary functions"""
 
-__all__ = ["geography", "category", "time", "add_all_info", "interp", "ace"]
+__all__ = [
+    "geography",
+    "category",
+    "time",
+    "add_all_info",
+    "interp",
+    "ace",
+    "to_tropycal",
+]
 
 from . import geography
 from . import category
 from . import time
 from . import interp
 from . import ace
+from ._tropycal import to_tropycal
 
 
 def add_all_info(
