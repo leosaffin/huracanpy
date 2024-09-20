@@ -1,8 +1,13 @@
 import pytest
 
+import pathlib
+
 import numpy as np
 
 import huracanpy
+
+
+testdata = pathlib.Path(__file__).parent / "saved_results"
 
 
 @pytest.mark.parametrize(
@@ -161,3 +166,22 @@ def test_get_continent(data, expected, request):
     data = request.getfixturevalue(data)
     result = huracanpy.utils.geography.get_continent(data.lon, data.lat)
     assert (result == expected).all()
+
+
+@pytest.mark.parametrize(
+    "data, expected",
+    [
+        ("tracks_minus180_plus180", "get_propagation.npy"),
+        ("tracks_0_360", "get_propagation.npy"),
+        ("tracks_csv", "get_propagation_csv.npy"),
+    ],
+)
+def test_get_propagation(data, expected, request):
+    data = request.getfixturevalue(data)
+    result = huracanpy.utils.geography.get_propagation(
+        data.lon, data.lat, data.track_id
+    )
+    expected = np.load(testdata / expected)
+
+    for r_, e_ in zip(result, expected):
+        np.testing.assert_allclose(r_, e_, rtol=1e-12)
