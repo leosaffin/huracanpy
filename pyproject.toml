@@ -10,6 +10,7 @@ requires-python = ">=3.9"
 dependencies = [
   "cartopy",
   "cftime",
+  "dateutil",
   # Issue with newer versions of fiona when using old versions of geopandas
   # see https://stackoverflow.com/a/78949565/8270394
   "geopandas>=0.14.4",
@@ -22,9 +23,11 @@ dependencies = [
   "nvector",
   "pandas",
   "parse",
+  "pint",
   "pyarrow",
   "pyproj",
   "scikit-learn",
+  "scipy",
   "seaborn",
   "shapely",
   "tqdm",
